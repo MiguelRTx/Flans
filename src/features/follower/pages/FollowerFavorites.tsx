@@ -53,7 +53,7 @@ export const FollowerFavorites = () => {
           </div>
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">Mis Favoritos</h1>
-            <p className="text-sm text-gray-500">{favorites.length} {favorites.length === 1 ? 'creador guardado' : 'creadores guardados'}</p>
+            <p className="text-sm text-gray-600">{favorites.length} {favorites.length === 1 ? 'creador guardado' : 'creadores guardados'}</p>
           </div>
         </div>
         <div className="hidden sm:flex items-center space-x-1 text-xs text-rose-600 bg-rose-50 px-3 py-1.5 rounded-full border border-rose-100">
@@ -64,7 +64,6 @@ export const FollowerFavorites = () => {
 
       {favorites.length === 0 ? (
         <div className="relative bg-white/70 backdrop-blur-sm p-14 rounded-3xl border border-white shadow-xl text-center overflow-hidden">
-          {/* Decorative blobs */}
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-200/30 rounded-full blur-2xl" />
           <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-200/30 rounded-full blur-2xl" />
           <div className="relative z-10">
@@ -72,7 +71,7 @@ export const FollowerFavorites = () => {
               <Heart className="w-10 h-10 text-rose-300" />
             </div>
             <p className="text-gray-700 text-xl font-bold">No tienes favoritos aún</p>
-            <p className="text-gray-400 text-sm mt-2">Explora creadores y márcalos como favoritos</p>
+            <p className="text-gray-600 text-sm mt-2">Explora creadores y márcalos como favoritos</p>
             <Link
               to="/creators"
               className="inline-flex items-center mt-6 px-6 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl hover:from-violet-600 hover:to-purple-700 transition-all shadow-md shadow-violet-200/50 text-sm font-semibold"

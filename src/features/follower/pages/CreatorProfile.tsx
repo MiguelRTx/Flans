@@ -4,6 +4,7 @@ import { followerService } from '../services/follower.service';
 import { Heart, HeartOff, Send, Lock, Target, MessageSquare, ArrowLeft, Clock, Sparkles, Shield } from 'lucide-react';
 import { Button } from '../../../components/common/Button';
 import type { CreatorProfileData, Goal, Post } from '../../../types';
+import { ImageModal } from '../../../components/common/ImageModal';
 
 export const CreatorProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +22,7 @@ export const CreatorProfile = () => {
   const [donateMessage, setDonateMessage] = useState('');
   const [commentText, setCommentText] = useState<Record<number, string>>({});
   const [commentingPostId, setCommentingPostId] = useState<number | null>(null);
-
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const loadPosts = useCallback(async () => {
     try {
       setPostsLoading(true);
@@ -37,6 +38,7 @@ export const CreatorProfile = () => {
     try {
       setLoading(true);
       const profileData = await followerService.getCreatorProfile(creatorId);
+      
       setCreator(profileData.creator);
       setGoals(profileData.goals);
       try {
@@ -100,15 +102,14 @@ export const CreatorProfile = () => {
 
   return (
     <div className="space-y-6">
-      {/* Back Link */}
       <Link to="/creators" className="inline-flex items-center text-sm text-gray-400 hover:text-amber-600 transition-colors font-medium group">
         <ArrowLeft className="w-4 h-4 mr-1 group-hover:-translate-x-0.5 transition-transform" />
         Volver a Creadores
       </Link>
-
-      {/* Profile Card */}
+      {selectedImage && (
+        <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/80 overflow-hidden">
-        {/* Banner */}
         <div className="h-52 bg-gradient-to-r from-violet-400 via-purple-500 to-fuchsia-500 relative overflow-hidden">
           {creator.banner ? (
             <img src={creator.banner} alt="Banner" className="w-full h-full object-cover" />
@@ -118,11 +119,9 @@ export const CreatorProfile = () => {
               <div className="absolute bottom-4 left-8 w-32 h-16 bg-white/10 rounded-full blur-xl" />
             </>
           )}
-          {/* Overlay gradient at bottom for smooth blend */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/10 to-transparent" />
         </div>
 
-        {/* Profile Info */}
         <div className="px-6 pb-6">
           <div className="relative -mt-14 mb-4 flex items-end justify-between">
             <div className="relative">
@@ -165,7 +164,6 @@ export const CreatorProfile = () => {
         </div>
       </div>
 
-      {/* Goals */}
       {goals.length > 0 && (
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-white/80 p-6 shadow-sm">
           <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
@@ -185,9 +183,8 @@ export const CreatorProfile = () => {
         </div>
       )}
 
-      {/* Donate Section */}
+
       <div className="relative bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-2xl p-6 overflow-hidden shadow-lg">
-        {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
         <div className="absolute bottom-0 left-10 w-20 h-20 bg-white/10 rounded-full translate-y-1/2 blur-xl" />
 
@@ -212,14 +209,27 @@ export const CreatorProfile = () => {
             <span className="text-sm font-semibold text-white/90">
               = <span className="text-lg font-extrabold text-white">{donateAmount * 10} Bs.</span>
             </span>
-            <Button onClick={handleDonate} isLoading={donating} className="!w-auto !bg-white !text-amber-600 hover:!bg-gray-50 !font-bold !shadow-md">
-              <Send className="w-4 h-4 mr-2" />Enviar Flanes
+            <Button 
+              onClick={handleDonate} 
+              isLoading={donating} 
+              className="
+                !w-full md:!w-auto !px-8 !h-[60px] 
+                !bg-white !text-orange-600 
+                hover:!bg-gradient-to-br hover:!from-orange-50 hover:!to-amber-50 
+                hover:!text-orange-700 
+                hover:!shadow-xl hover:!scale-[1.02] 
+                !font-extrabold !text-base !shadow-lg 
+                !rounded-xl !transition-all !duration-300 
+                !flex !items-center !justify-center
+              "
+            >
+              <Send className="w-5 h-5 mr-3 flex-shrink-0" />
+              <span className="flex items-center">Enviar Flanes</span>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Posts Section */}
       <div className="space-y-5">
         <h2 className="text-lg font-bold text-gray-900 flex items-center">
           <div className="p-1.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg mr-2">
@@ -252,7 +262,10 @@ export const CreatorProfile = () => {
           <div key={post.id} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/80 overflow-hidden hover:shadow-lg transition-all duration-300">
             {post.image && (
               <div className="p-3 pb-0">
-                <img src={post.image} className="w-full max-h-[500px] object-cover rounded-xl" alt="Post" />
+                <img src={post.image}
+                  className="w-full max-h-[500px] object-cover rounded-xl"
+                  onClick={() => setSelectedImage(post.image!)}
+                  alt="Post" />
               </div>
             )}
             <div className="p-5">

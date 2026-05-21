@@ -66,7 +66,6 @@ export const CreatorsList = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="p-2.5 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl shadow-md shadow-purple-200/50">
@@ -74,7 +73,7 @@ export const CreatorsList = () => {
           </div>
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">Creadores</h1>
-            <p className="text-sm text-gray-500">Descubre y apoya a creadores increíbles</p>
+            <p className="text-sm text-gray-600">Descubre y apoya a creadores increíbles</p>
           </div>
         </div>
         <div className="hidden sm:flex items-center space-x-1 text-xs text-violet-600 bg-violet-50 px-3 py-1.5 rounded-full border border-violet-100">
@@ -83,7 +82,6 @@ export const CreatorsList = () => {
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="bg-white/70 backdrop-blur-sm rounded-2xl border border-white/80 p-5 shadow-sm">
         <div className="flex space-x-3">
           <div className="flex-1 relative">
@@ -119,8 +117,6 @@ export const CreatorsList = () => {
           </p>
         )}
       </div>
-
-      {/* Creators Grid */}
       {displayedCreators.length === 0 ? (
         <div className="relative bg-white/70 backdrop-blur-sm p-14 rounded-3xl border border-white shadow-xl text-center overflow-hidden">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-violet-200/30 rounded-full blur-2xl" />
@@ -139,7 +135,6 @@ export const CreatorsList = () => {
               className="group bg-white/80 backdrop-blur-sm rounded-2xl border border-white/80 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               style={{ animationDelay: `${index * 60}ms` }}
             >
-              {/* Mini Banner */}
               <div className="h-24 bg-gradient-to-r from-violet-400 via-purple-500 to-fuchsia-500 relative overflow-hidden">
                 {creator.banner ? (
                   <img

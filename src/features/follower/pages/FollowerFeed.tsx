@@ -3,11 +3,12 @@ import { followerService } from '../services/follower.service';
 import { Home, MessageSquare, Clock, Sparkles } from 'lucide-react';
 import type { FeedPost } from '../../../types';
 import { Link } from 'react-router-dom';
+import { ImageModal } from '../../../components/common/ImageModal';
 
 export const FollowerFeed = () => {
   const [feed, setFeed] = useState<FeedPost[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   useEffect(() => {
     const loadFeed = async () => {
       try {
@@ -47,7 +48,6 @@ export const FollowerFeed = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="p-2.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl shadow-md shadow-orange-200/50">
@@ -55,7 +55,7 @@ export const FollowerFeed = () => {
           </div>
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">Tu Feed</h1>
-            <p className="text-sm text-gray-500">Publicaciones de los creadores que apoyas</p>
+            <p className="text-sm text-gray-600">Publicaciones de los creadores que apoyas</p>
           </div>
         </div>
         <div className="hidden sm:flex items-center space-x-1 text-xs text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-100">
@@ -63,10 +63,11 @@ export const FollowerFeed = () => {
           <span className="font-medium">{feed.length} publicaciones</span>
         </div>
       </div>
-
+      {selectedImage && (
+        <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
       {feed.length === 0 ? (
         <div className="relative bg-white/70 backdrop-blur-sm p-14 rounded-3xl border border-white shadow-xl text-center overflow-hidden">
-          {/* Decorative blobs */}
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-200/30 rounded-full blur-2xl" />
           <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-200/30 rounded-full blur-2xl" />
           <span className="text-6xl block mb-4 drop-shadow-sm">🍮</span>
@@ -90,7 +91,6 @@ export const FollowerFeed = () => {
               className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/80 overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               style={{ animationDelay: `${index * 80}ms` }}
             >
-              {/* Post Header */}
               <div className="flex items-center space-x-3 p-5 pb-3">
                 <Link to={`/creators/${post.creator_id}`} className="relative group">
                   <img
@@ -115,8 +115,6 @@ export const FollowerFeed = () => {
                   </p>
                 </div>
               </div>
-
-              {/* Post Content */}
               {post.text && (
                 <div className="px-5 pb-3">
                   <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">{post.text}</p>
@@ -127,13 +125,12 @@ export const FollowerFeed = () => {
                 <div className="px-3 pb-3">
                   <img
                     src={post.image}
+                    onClick={() => setSelectedImage(post.image!)}
                     className="w-full max-h-[500px] object-cover rounded-xl"
                     alt="Post"
                   />
                 </div>
               )}
-
-              {/* Actions */}
               <div className="px-5 py-3 border-t border-gray-50 flex items-center">
                 <Link
                   to={`/creators/${post.creator_id}`}
@@ -148,5 +145,7 @@ export const FollowerFeed = () => {
         </div>
       )}
     </div>
+    
   );
+  
 };

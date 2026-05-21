@@ -91,3 +91,7 @@ export interface CreatorListItem {
   profile_photo: string | null;
   banner: string | null;
 }
+export interface ImageModalProps {
+  src: string;
+  onClose: () => void;
+}

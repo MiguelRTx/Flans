@@ -8,17 +8,13 @@ export const FollowerDonations = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [creatorName, setCreatorName] = useState('');
-  
-  // Nuevos estados para el Autocomplete
   const [allCreators, setAllCreators] = useState<CreatorListItem[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
-
   const [donations, setDonations] = useState<Donation[]>([]);
   const [summary, setSummary] = useState<DonationSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // 1. Cargar historial y lista de creadores al montar la pantalla
   useEffect(() => {
     const loadInitialData = async () => {
       handleSearch();
@@ -30,7 +26,6 @@ export const FollowerDonations = () => {
       }
     };
     loadInitialData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearch = async () => {
@@ -53,7 +48,6 @@ export const FollowerDonations = () => {
     }
   };
 
-  // 2. Lógica de filtrado en tiempo real
   const filteredCreators = allCreators.filter(creator => {
     const searchStr = creatorName.toLowerCase();
     const name = (creator.display_name || '').toLowerCase();
@@ -65,7 +59,6 @@ export const FollowerDonations = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md shadow-emerald-200/50">
@@ -73,7 +66,7 @@ export const FollowerDonations = () => {
           </div>
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">Historial de Donaciones</h1>
-            <p className="text-sm text-gray-500">Consulta todas tus donaciones realizadas</p>
+            <p className="text-sm text-gray-600">Consulta todas tus donaciones realizadas</p>
           </div>
         </div>
         {summary && (
@@ -113,7 +106,6 @@ export const FollowerDonations = () => {
             />
           </div>
           
-          {/* Dropdown Predictivo del Creador */}
           <div className="relative">
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Creador</label>
             <div className="relative">
@@ -140,7 +132,6 @@ export const FollowerDonations = () => {
               )}
             </div>
 
-            {/* Lista Flotante de Resultados */}
             {showDropdown && creatorName && filteredCreators.length > 0 && (
               <ul className="absolute z-20 w-full mt-1.5 bg-white/95 backdrop-blur-xl border border-gray-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto divide-y divide-gray-50">
                 {filteredCreators.map(c => (
