@@ -3,10 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-const { initializeDatabase } = require('./config/database');
+const { initializeDatabase } = require('../config/database');
 const authRoutes     = require('./routes/auth');
 const creatorRoutes  = require('./routes/creators');
-const followerRoutes = require('./routes/followers');
+const followerRoutes = require('../routes/followers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,8 +38,8 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(` Backend-Flans corriendo en http://localhost:${PORT}`);
-  console.log(` Archivos estáticos: http://localhost:${PORT}/uploads`);
+  console.log(`🍮 Backend-Flans corriendo en http://localhost:${PORT}`);
+  console.log(`📁 Archivos estáticos: http://localhost:${PORT}/uploads`);
 });
 
 module.exports = app;
