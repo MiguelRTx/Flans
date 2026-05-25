@@ -71,7 +71,6 @@ export const followerService = {
     return response.data;
   },
 
-  // ── Feed ───────────────────────────────────────────────────────
   getFeed: async (): Promise<{ feed: FeedPost[]; count: number }> => {
     const response = await api.get('/followers/feed');
     return response.data;

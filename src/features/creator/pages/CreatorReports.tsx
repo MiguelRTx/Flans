@@ -27,7 +27,6 @@ export const CreatorReports = () => {
       setLoading(false);
     }
   };
-  // AÑADIR ESTO: Ejecutar la búsqueda automáticamente al cargar la pantalla
   useEffect(() => {
     handleSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +44,6 @@ export const CreatorReports = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center space-x-3">
         <div className="p-2 bg-purple-100 rounded-lg">
           <BarChart3 className="w-6 h-6 text-purple-600" />
@@ -56,7 +54,6 @@ export const CreatorReports = () => {
         </div>
       </div>
 
-      {/* Filters */}
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <div className="flex items-center space-x-2 mb-4">
           <Calendar className="w-5 h-5 text-gray-500" />

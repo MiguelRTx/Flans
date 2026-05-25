@@ -50,7 +50,6 @@ export const ProfileHeader = ({ creator, onUpdate }: ProfileHeaderProps) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-      {/* Banner Section */}
       <div className="relative h-48 md:h-64 bg-gray-200">
         <img 
           src={creator.banner || 'https://images.unsplash.com/photo-1557683316-973673baf926'} 
@@ -66,7 +65,6 @@ export const ProfileHeader = ({ creator, onUpdate }: ProfileHeaderProps) => {
         <input type="file" ref={bannerInputRef} className="hidden" onChange={(e) => handleImageUpload(e, 'banner')} accept="image/*" />
       </div>
 
-      {/* Profile Info Section */}
       <div className="px-8 pb-8">
         <div className="relative -mt-16 mb-4">
           <div className="inline-block relative">

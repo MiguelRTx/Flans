@@ -2,18 +2,22 @@ import { useEffect, useState } from 'react';
 import { creatorService } from '../services/creator.service';
 import { Target, Plus, Edit2, Trash2, Save, X } from 'lucide-react';
 import { Button } from '../../../components/common/Button';
+import { ConfirmModal } from '../../../components/common/ConfirmModal';
 import type { Goal } from '../../../types';
 
 export const CreatorGoals = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Form state
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [goalToDelete, setGoalToDelete] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const loadGoals = async () => {
     try {
@@ -66,13 +70,23 @@ export const CreatorGoals = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('¿Estás seguro de eliminar esta meta?')) return;
+  const handleDeleteClick = (id: number) => {
+    setGoalToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (goalToDelete === null) return;
     try {
-      await creatorService.deleteGoal(id);
-      loadGoals();
+      setIsDeleting(true);
+      await creatorService.deleteGoal(goalToDelete);
+      await loadGoals();
     } catch (error) {
       console.error('Error eliminando meta:', error);
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+      setGoalToDelete(null);
     }
   };
 
@@ -93,7 +107,6 @@ export const CreatorGoals = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-purple-100 rounded-lg">
@@ -112,7 +125,6 @@ export const CreatorGoals = () => {
         )}
       </div>
 
-      {/* Create / Edit Form */}
       {showForm && (
         <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
@@ -158,7 +170,6 @@ export const CreatorGoals = () => {
         </div>
       )}
 
-      {/* Goals List */}
       {goals.length === 0 ? (
         <div className="bg-white p-12 rounded-2xl border border-dashed border-gray-300 text-center">
           <Target className="w-12 h-12 text-gray-300 mx-auto mb-4" />
@@ -191,7 +202,7 @@ export const CreatorGoals = () => {
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={() => handleDelete(goal.id)}
+                    onClick={() => handleDeleteClick(goal.id)}
                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     title="Eliminar"
                   >
@@ -203,6 +214,23 @@ export const CreatorGoals = () => {
           ))}
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        title="¿Eliminar meta de apoyo?"
+        message="Esta acción es permanente y no se puede deshacer. Se removerá la meta de tu perfil público y los seguidores ya no la verán."
+        confirmLabel="Eliminar meta"
+        cancelLabel="Conservar meta"
+        variant="danger"
+        isLoading={isDeleting}
+        onConfirm={handleDeleteConfirm}
+        onClose={() => {
+          if (!isDeleting) {
+            setIsDeleteModalOpen(false);
+            setGoalToDelete(null);
+          }
+        }}
+      />
     </div>
   );
 };

@@ -112,7 +112,11 @@ export const CreatorProfile = () => {
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/80 overflow-hidden">
         <div className="h-52 bg-gradient-to-r from-violet-400 via-purple-500 to-fuchsia-500 relative overflow-hidden">
           {creator.banner ? (
-            <img src={creator.banner} alt="Banner" className="w-full h-full object-cover" />
+            <img
+             src={creator.banner}
+              alt="Banner"
+              onClick={() => setSelectedImage(creator.banner!)}
+              className="w-full h-full object-cover" />
           ) : (
             <>
               <div className="absolute top-6 right-10 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
@@ -127,6 +131,7 @@ export const CreatorProfile = () => {
             <div className="relative">
               <img
                 src={creator.profile_photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(creator.display_name || 'C')}&size=128&background=7c3aed&color=fff&bold=true`}
+                onClick={() => setSelectedImage(creator.profile_photo!)}
                 alt="Profile"
                 className="w-28 h-28 rounded-2xl border-4 border-white shadow-xl object-cover"
               />

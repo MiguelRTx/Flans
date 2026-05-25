@@ -54,7 +54,7 @@ export const FollowerFeed = () => {
             <Home className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-gray-900">Tu Feed</h1>
+            <h1 className="text-2xl font-extrabold text-gray-900">Para ti</h1>
             <p className="text-sm text-gray-600">Publicaciones de los creadores que apoyas</p>
           </div>
         </div>

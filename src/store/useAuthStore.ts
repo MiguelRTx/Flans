@@ -34,8 +34,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   }
 }));
 
-// Escuchar eventos de sesión expirada desde Axios
 window.addEventListener('auth:unauthorized', () => {
   useAuthStore.getState().logout();
-  window.location.href = '/login'; // Forzar redirección limpia
+  window.location.href = '/login';
 });

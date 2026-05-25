@@ -25,7 +25,6 @@ export const FollowerLayout = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 font-sans text-gray-900">
-      {/* Navbar Superior — Glassmorphism */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-white/50 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -37,7 +36,6 @@ export const FollowerLayout = () => {
               </span>
             </div>
 
-            {/* Navegación Desktop */}
             <nav className="hidden md:flex items-center space-x-1">
               {FOLLOWER_NAV_ITEMS.map((item) => (
                 <NavLink
@@ -57,7 +55,6 @@ export const FollowerLayout = () => {
               ))}
             </nav>
 
-            {/* Perfil & Logout */}
             <div className="flex items-center space-x-3">
               <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-orange-50 rounded-full border border-amber-100">
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
@@ -76,7 +73,6 @@ export const FollowerLayout = () => {
           </div>
         </div>
 
-        {/* Mobile Nav */}
         <nav className="md:hidden flex justify-around border-t border-gray-100/60 py-1 px-2">
           {FOLLOWER_NAV_ITEMS.map((item) => (
             <NavLink

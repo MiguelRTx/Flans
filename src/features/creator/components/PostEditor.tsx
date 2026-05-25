@@ -47,7 +47,7 @@ export const PostEditor = ({ onPostCreated }: PostEditorProps) => {
       await creatorService.createPost(text, imageFile);
       setText('');
       handleRemoveImage();
-      onPostCreated(); // Notificar a la página principal para recargar la lista
+      onPostCreated();
     } catch (error) {
       console.error('Error al publicar el post:', error);
     } finally {
@@ -66,7 +66,6 @@ export const PostEditor = ({ onPostCreated }: PostEditorProps) => {
           maxLength={1000}
         />
 
-        {/* Zona de Previsualización de Imagen */}
         {previewUrl && (
           <div className="relative mt-2 mb-4 rounded-lg overflow-hidden max-h-60 bg-gray-50 border border-gray-100 flex items-center justify-center">
             <img src={previewUrl} alt="Preview" className="object-cover max-h-60 w-full" />
@@ -81,7 +80,6 @@ export const PostEditor = ({ onPostCreated }: PostEditorProps) => {
         )}
 
         <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-          {/* Botón para abrir selección de imagen */}
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}

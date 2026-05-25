@@ -3,12 +3,17 @@ import { creatorService } from '../services/creator.service';
 import { PostEditor } from '../components/PostEditor';
 import { FileText, MessageSquare, Trash2, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Post } from '../../../types';
+import { ConfirmModal } from '../../../components/common/ConfirmModal';
+import { ImageModal } from '../../../components/common/ImageModal';
 
 export const CreatorPosts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedComments, setExpandedComments] = useState<Set<number>>(new Set());
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const loadPosts = async () => {
     try {
       setLoading(true);
@@ -25,13 +30,23 @@ export const CreatorPosts = () => {
     loadPosts();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('¿Estás seguro de eliminar esta publicación?')) return;
+  const handleDeleteClick = (id: number) => {
+    setPostToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (postToDelete === null) return;
     try {
-      await creatorService.deletePost(id);
-      loadPosts();
+      setIsDeleting(true);
+      await creatorService.deletePost(postToDelete);
+      await loadPosts();
     } catch (error) {
       console.error('Error eliminando post:', error);
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteModalOpen(false);
+      setPostToDelete(null);
     }
   };
 
@@ -65,7 +80,6 @@ export const CreatorPosts = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center space-x-3">
         <div className="p-2 bg-purple-100 rounded-lg">
           <FileText className="w-6 h-6 text-purple-600" />
@@ -78,10 +92,10 @@ export const CreatorPosts = () => {
         </div>
       </div>
 
-      {/* Post Editor */}
       <PostEditor onPostCreated={loadPosts} />
-
-      {/* Posts List */}
+      {selectedImage && (
+        <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
       {posts.length === 0 ? (
         <div className="bg-white p-12 rounded-2xl border border-dashed border-gray-300 text-center">
           <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
@@ -103,6 +117,7 @@ export const CreatorPosts = () => {
                   <div className="bg-gray-50 border-b border-gray-100">
                     <img
                       src={post.image}
+                      onClick={() => setSelectedImage(post.image!)}
                       className="w-full aspect-video object-contain"
                       alt="Post"
                     />
@@ -143,7 +158,7 @@ export const CreatorPosts = () => {
                       )}
                     </div>
                     <button
-                      onClick={() => handleDelete(post.id)}
+                      onClick={() => handleDeleteClick(post.id)} // Abrimos modal al hacer clic
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Eliminar publicación"
                     >
@@ -151,12 +166,11 @@ export const CreatorPosts = () => {
                     </button>
                   </div>
 
-                  {/* Comments Section */}
                   {isExpanded && commentCount > 0 && (
                     <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
                       <h4 className="text-sm font-semibold text-gray-700 flex items-center">
                         <MessageSquare className="w-4 h-4 mr-1 text-purple-500" />
-                        Comentarios (Solo visibles para ti)
+                        Comentarios
                       </h4>
                       {post.comments!.map((comment) => (
                         <div
@@ -182,6 +196,22 @@ export const CreatorPosts = () => {
           })}
         </div>
       )}
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        title="¿Eliminar publicación?"
+        message="Esta acción es permanente y no se puede deshacer. Se borrará el texto, la imagen y todos los comentarios asociados a este post."
+        confirmLabel="Eliminar permanentemente"
+        cancelLabel="Conservar post"
+        variant="danger"
+        isLoading={isDeleting}
+        onConfirm={handleDeleteConfirm}
+        onClose={() => {
+          if (!isDeleting) {
+            setIsDeleteModalOpen(false);
+            setPostToDelete(null);
+          }
+        }}
+      />
     </div>
   );
 };

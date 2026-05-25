@@ -8,13 +8,11 @@ import { FollowerLayout } from '../components/layouts/FollowerLayout';
 import { LoginForm } from '../features/auth/components/LoginForm';
 import { RegisterForm } from '../features/auth/components/RegisterForm';
 
-// Creator pages
 import { CreatorDashboard } from '../features/creator/pages/CreatorDashboard';
 import { CreatorPosts } from '../features/creator/pages/CreatorPosts';
 import { CreatorGoals } from '../features/creator/pages/CreatorGoals';
 import { CreatorReports } from '../features/creator/pages/CreatorReports';
 
-// Follower pages
 import { FollowerFeed } from '../features/follower/pages/FollowerFeed';
 import { CreatorsList } from '../features/follower/pages/CreatorsList';
 import { CreatorProfile } from '../features/follower/pages/CreatorProfile';
