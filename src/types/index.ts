@@ -48,7 +48,7 @@ export interface Post {
 }
 
 export interface FeedPost extends Post {
-  creator_name: string;
+ creator_display_name: string;
   creator_photo: string | null;
 }
 

@@ -48,14 +48,14 @@ export const FollowerFeed = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="bg-white/85 backdrop-blur-md rounded-2xl border border-white/80 p-5 shadow-sm flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="p-2.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl shadow-md shadow-orange-200/50">
             <Home className="w-5 h-5 text-white" />
           </div>
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">Para ti</h1>
-            <p className="text-sm text-gray-600">Publicaciones de los creadores que apoyas</p>
+            <p className="text-sm text-gray-600 font-medium">Publicaciones de los creadores que apoyas</p>
           </div>
         </div>
         <div className="hidden sm:flex items-center space-x-1 text-xs text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full border border-amber-100">
@@ -94,8 +94,8 @@ export const FollowerFeed = () => {
               <div className="flex items-center space-x-3 p-5 pb-3">
                 <Link to={`/creators/${post.creator_id}`} className="relative group">
                   <img
-                    src={post.creator_photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(post.creator_name || 'C') + '&background=f59e0b&color=fff'}
-                    alt={post.creator_name}
+                    src={post.creator_photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(post.creator_display_name|| 'C') + '&background=f59e0b&color=fff'}
+                    alt={post.creator_display_name}
                     className="w-11 h-11 rounded-full object-cover ring-2 ring-amber-100 group-hover:ring-amber-400 transition-all"
                   />
                   <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full border-2 border-white flex items-center justify-center">
@@ -107,7 +107,7 @@ export const FollowerFeed = () => {
                     to={`/creators/${post.creator_id}`}
                     className="text-sm font-bold text-gray-900 hover:text-amber-600 transition-colors"
                   >
-                    {post.creator_name}
+                    {post.creator_display_name}
                   </Link>
                   <p className="text-xs text-gray-400 flex items-center mt-0.5">
                     <Clock className="w-3 h-3 mr-1" />

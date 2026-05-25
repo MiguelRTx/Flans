@@ -17,6 +17,7 @@ export const followerService = {
 
   getAllCreators: async (): Promise<{ creators: CreatorListItem[] }> => {
     const response = await api.get('/creators');
+    console.log(response)
     return response.data;
   },
 
@@ -24,11 +25,13 @@ export const followerService = {
     id: number
   ): Promise<{ creator: CreatorProfileData; goals: Goal[] }> => {
     const response = await api.get(`/followers/creators/${id}`);
+    console.log(response)
     return response.data;
   },
 
   getCreatorPosts: async (creatorId: number): Promise<Post[]> => {
     const response = await api.get(`/followers/creators/${creatorId}/posts`);
+    console.log(response)
     return response.data.posts;
   },
 
@@ -73,6 +76,7 @@ export const followerService = {
 
   getFeed: async (): Promise<{ feed: FeedPost[]; count: number }> => {
     const response = await api.get('/followers/feed');
+    console.log(response)
     return response.data;
   },
 };

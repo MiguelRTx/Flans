@@ -78,10 +78,14 @@ export const CreatorReports = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-200 focus:border-purple-500 outline-none"
             />
           </div>
-          <Button onClick={handleSearch} isLoading={loading} className="!w-auto">
-            <Search className="w-4 h-4 mr-2" />
-            Consultar
-          </Button>
+            <Button 
+              onClick={handleSearch} 
+              isLoading={loading} 
+              className="w-full !py-2 !h-[40px] text-sm flex justify-center items-center !bg-gradient-to-r !from-purple-500 !to-indigo-600 hover:!from-purple-600 hover:!to-indigo-700 !shadow-md !shadow-purple-200/50 !rounded-lg border border-transparent"
+            >
+              <Search className="w-4 h-4 mr-2" />
+              Consultar
+            </Button>
         </div>
       </div>
 
@@ -108,7 +112,6 @@ export const CreatorReports = () => {
         </div>
       )}
 
-      {/* Donations Table */}
       {hasSearched && report && (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100">
